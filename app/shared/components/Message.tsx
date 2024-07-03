@@ -1,7 +1,13 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const Message = ({ message }) => (
+interface MessageProps {
+  message: {
+    text: string;
+  };
+}
+
+const Message: React.FC<MessageProps> = ({ message }) => (
   <View>
     <Text>{message.text}</Text>
   </View>

@@ -1,13 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchChats, createChat, deleteChat } from "./chatActions";
+import { Chat } from "types/Chat";
+
+interface ChatState {
+  chats: Chat[];
+  status: string;
+  error: string | null;
+}
+
+const initialState: ChatState = {
+  chats: [],
+  status: "idle",
+  error: null,
+};
 
 const chatSlice = createSlice({
   name: "chat",
-  initialState: {
-    chats: [],
-    status: "idle",
-    error: null,
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -20,7 +29,7 @@ const chatSlice = createSlice({
       })
       .addCase(fetchChats.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.error.message || null;
       })
       .addCase(createChat.fulfilled, (state, action) => {
         state.chats.push(action.payload);
@@ -31,4 +40,4 @@ const chatSlice = createSlice({
   },
 });
 
-export const chatReduser = chatSlice.reducer;
+export const chatReducer = chatSlice.reducer;

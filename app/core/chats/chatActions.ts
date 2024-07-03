@@ -16,7 +16,7 @@ export const createChat = createAsyncThunk(
   }
 );
 
-export const deleteChat = createAsyncThunk(
+export const deleteChat = createAsyncThunk<string, string>(
   "chats/deleteChat",
   async (chatId: string) => {
     await axios.delete(`${API_URL}/${chatId}`);
