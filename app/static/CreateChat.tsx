@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, TextInput, Button } from "react-native";
-import { useDispatch } from "react-redux";
 import { createChat } from "../core/chats/chatActions";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "types/RootStackParamList";
+import { useAppDispatch } from "core/hooks/hooks";
 
 type CreateChatScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -16,7 +16,7 @@ type CreateChatProps = {
 
 const CreateChat: React.FC<CreateChatProps> = ({ navigation }) => {
   const [name, setName] = useState<string>("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = () => {
     dispatch(createChat({ name }));

@@ -1,12 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Chat } from "types/Chat";
 
 const API_URL = "https://your-mock-api-url.com/chats";
 
-export const fetchChats = createAsyncThunk("chats/fetchChats", async () => {
-  const response = await axios.get(API_URL);
-  return response.data;
-});
+export const fetchChats = createAsyncThunk<Chat[]>(
+  "chats/fetchChats",
+  async () => {
+    // Replace with actual API call
+    const response = await fetch("/api/chats");
+    return (await response.json()) as Chat[];
+  }
+);
 
 export const createChat = createAsyncThunk(
   "chats/createChat",
@@ -16,10 +21,9 @@ export const createChat = createAsyncThunk(
   }
 );
 
-export const deleteChat = createAsyncThunk<string, string>(
+export const deleteChat = createAsyncThunk<void, string>(
   "chats/deleteChat",
-  async (chatId: string) => {
-    await axios.delete(`${API_URL}/${chatId}`);
-    return chatId;
+  async (chatId) => {
+    await fetch(`/api/chats/${chatId}`, { method: "DELETE" });
   }
 );

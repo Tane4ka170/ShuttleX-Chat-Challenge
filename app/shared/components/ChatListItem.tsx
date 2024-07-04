@@ -1,18 +1,20 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
 import { deleteChat } from "../../core/chats/chatActions";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "types/RootStackParamList";
 import { Chat } from "types/Chat";
-import { useAppDispatch } from "core/hooks/hooks";
+import { AppDispatch } from "core/store";
 
 type ChatListItemProps = {
   chat: Chat;
-  navigation: StackNavigationProp<RootStackParamList, "Chat">;
+  navigateToChat: () => void;
 };
 
-const ChatListItem: React.FC<ChatListItemProps> = ({ chat, navigation }) => {
-  const dispatch = useAppDispatch();
+const ChatListItem: React.FC<ChatListItemProps> = ({
+  chat,
+  navigateToChat,
+}) => {
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleDelete = () => {
     dispatch(deleteChat(chat.id));
@@ -20,9 +22,7 @@ const ChatListItem: React.FC<ChatListItemProps> = ({ chat, navigation }) => {
 
   return (
     <View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Chat", { chatId: chat.id })}
-      >
+      <TouchableOpacity onPress={navigateToChat}>
         <Text>{chat.name}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleDelete}>

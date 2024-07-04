@@ -28,7 +28,12 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       <FlatList
         data={chats}
         renderItem={({ item }: { item: Chat }) => (
-          <ChatListItem chat={item} navigation={navigation} />
+          <ChatListItem
+            chat={item}
+            navigateToChat={() =>
+              navigation.navigate("Chat", { chatId: item.id })
+            }
+          />
         )}
         keyExtractor={(item) => item.id.toString()}
       />
