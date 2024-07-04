@@ -11,16 +11,17 @@ type ChatProps = {
   route: ChatScreenRouteProp;
 };
 
-interface Message {
+export interface Message {
   id: string;
   text: string;
+  createdAt: string;
 }
 
 const Chat: React.FC<ChatProps> = ({ route }) => {
   const { chatId } = route.params;
   const [messages, setMessages] = useState<Message[]>([]);
   const [text, setText] = useState<string>("");
-  const socket = io("https://your-mock-api-url.com");
+  const socket = io("https://6686aec583c983911b033c7f.mockapi.io");
 
   useEffect(() => {
     socket.emit("joinChat", chatId);
